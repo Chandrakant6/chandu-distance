@@ -1,6 +1,7 @@
 from math import sqrt
 
-def calc(a, b, K=math.sqrt(2)) # calculated diatances
+# calculated diatances btw 2 points in 2D space (in grid space)
+def calc(a, b, K=math.sqrt(2)) 
 	ax, ay = a
 	bx, by = b
 	
