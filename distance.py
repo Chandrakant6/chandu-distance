@@ -7,3 +7,20 @@ def calc(a, b, K=math.sqrt(2))
 	
 	x, y = abs(ax-bx), abs(ay, by)
 	return max(x, y) + min(x, y) * (k - 1)
+
+# for nD space 
+def calc_general(a: list[float], b: list[float]): 
+    p = []
+    roots: list[float] = [sqrt(i+1) for i,_ in enumerate(a)][::-1]
+
+    for i, j in zip(a, b):
+        p.append(abs(i-j))
+    p.sort()
+    
+    dist = 0
+    while len(p) > 0 :
+        for i, j in zip(p, roots):
+            dist += p[0]*roots[0]
+            p = np.subtract(p[1:], p[0])
+            roots.pop(0)
+    return dist
