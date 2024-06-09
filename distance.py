@@ -4,7 +4,8 @@ random.seed(0)
 
 # third iteration for any no. of dimensions
 def calc(a: list[float], b: list[float]) -> tuple[list[float],list[float],float]:  
-    vector = [abs(i-j) for i, j in zip(a, b)].sort()
+    vector = [abs(i-j) for i, j in zip(a, b)]
+    vector.sort()
     roots = [sqrt(i) for i in range(1,len(a)+1)][::-1]
 
     path = [vector[0]] + [vector[i+1]-vector[i] for i in range(len(vector)-1)]
