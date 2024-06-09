@@ -1,4 +1,6 @@
 from math import sqrt
+import random
+random.seed(0)
 
 # third iteration for any no. of dimensions
 def calc(a: list[float], b: list[float]) -> tuple[list[float],list[float],float]:  
@@ -8,3 +10,12 @@ def calc(a: list[float], b: list[float]) -> tuple[list[float],list[float],float]
     vector = [point[0]] + [point[i+1]-point[i] for i in range(len(point)-1)]
 
     return point, vector, sum([i*j for i, j in zip(vector, roots)])
+
+# testing
+if __name__ == '__main__':
+    D = 3 #domensions
+
+    # points
+    a = [random.randrange(0,10) for _ in range(D)] 
+    b = [random.randrange(0,10) for _ in range(D)]
+    print(distance(a, b))
