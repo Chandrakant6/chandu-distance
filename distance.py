@@ -15,12 +15,31 @@ def plotline2D(*args):
     plt.plot(*zip(*args))
     plt.show()
 
+def plot_3d_lines(lines, colors, labels):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
 
-# testing
+    for i, line in enumerate(lines):
+        x, y, z = line
+        ax.plot3D(x, y, z, color=colors[i], label=labels[i])
+
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    ax.set_title('3D Line Plot')
+    ax.legend()
+
+    plt.show()
+
+
+# Example usage:
 if __name__ == '__main__':
-    D = 2 #domensions
-
-    # points
-    a = [random.randrange(0,10) for _ in range(D)] 
-    b = [random.randrange(0,10) for _ in range(D)]
-    print(distance(a,[2,6] b))
+    lines = [
+        (np.linspace(6, 4), np.linspace(6, 8), np.linspace(0, 2)),
+        (np.linspace(4, 4), np.linspace(8, 8), np.linspace(2, 7)),
+    ]
+    
+    colors = ['gray', 'blue']
+    labels = ['Line 1', 'Line 2']
+    
+    plot_3d_lines(lines, colors, labels)
