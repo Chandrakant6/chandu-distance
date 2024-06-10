@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
 from math import sqrt
 import random
 random.seed(0)
