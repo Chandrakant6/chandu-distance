@@ -1,6 +1,4 @@
 from math import sqrt
-import random
-random.seed(0)
 
 # third iteration for any no. of dimensions
 def calc(a: list[float], b: list[float]) -> list[list[float],list[float],float]:  
