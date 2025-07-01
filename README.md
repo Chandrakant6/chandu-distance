@@ -9,6 +9,7 @@ A custom distance calculation algorithm that combines elements of Manhattan and 
 - **Game-optimized**: Ideal for pathfinding in grid-based games
 - **Robust validation**: Comprehensive input validation with clear error messages
 - **Modular design**: Clean, testable, and maintainable code structure
+- **Visualization tools**: Built-in plotting capabilities for analysis and demonstration
 
 ## Use Cases
 
@@ -24,7 +25,8 @@ A custom distance calculation algorithm that combines elements of Manhattan and 
 git clone https://github.com/chandrakant6/chandu-distance.git
 cd chandu-distance
 
-# No additional dependencies required - uses only Python standard library
+# Install dependencies (for plotting functionality)
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -65,23 +67,101 @@ except ValueError as e:
     print(f"Error: {e}")
 ```
 
+## Visualization
+
+The `plotting.py` module provides simple visualization tools:
+
+### Distance Comparison
+```python
+from plotting import plot_comparison
+
+# Compare Manhattan, Euclidean, and Chandu distance
+plot_comparison(center=[0, 0], max_dist=5)
+```
+
+### Analysis
+```python
+from plotting import plot_analysis
+
+# Analyze the components of distance calculation
+plot_analysis([0, 0], [3, 4])
+```
+
+### 3D Visualization
+```python
+from plotting import plot_3d
+
+# Visualize 3D distance field
+plot_3d(center=[0, 0, 0], max_dist=3)
+```
+
+### Bar Chart Comparison
+```python
+from plotting import plot_bar
+
+# Compare different distance metrics
+plot_bar([0, 0], [3, 4])
+```
+
+### Run All Examples
+```python
+# Run all visualization examples
+python plotting.py
+```
+
 ## API Reference
 
-### `calc(a: list[float], b: list[float]) -> tuple[list[float], list[float], float]`
+### `chandu_len(a: list[float], b: list[float]) -> tuple[list[float], list[float], float]`
+Calculate the custom Chandu distance between two points in n-dimensional space.
+- Returns: (vector, path, distance)
 
-Calculate custom distance between two points in n-dimensional space.
+### `compute_segments(start, end) -> list[tuple[tuple[int], int]]`
+Compute a minimal-turn, run-length encoded path between two nD points.
+- Returns: List of (direction_vector, length) steps.
 
-**Parameters:**
-- `a`: First point coordinates as list of floats
-- `b`: Second point coordinates as list of floats
+### `get_keypoints(start, segments) -> list[list[int]]`
+Expand the run-length path to a full list of keypoints (turning points) along the path.
 
-**Returns:**
-- `vector`: Sorted absolute differences between coordinates
-- `path`: Incremental differences for weighted calculation  
-- `distance`: Final calculated distance value
+### `get_path_length(segments) -> int`
+Sum the total length of all segments in the run-length encoded path.
 
-**Raises:**
-- `ValueError`: If inputs are invalid (empty, different lengths, etc.)
+### `plot_path(points)`
+Plot the path in 2D or 3D depending on the dimensionality of the points.
+
+## Usage Example
+
+```python
+from distance import chandu_len, compute_segments, get_keypoints, get_path_length
+from plotting import plot_path
+
+start = (3, -7, 0)
+end = (9, -12, 6)
+segments = compute_segments(start, end)
+turning_points = get_keypoints(start, segments)
+total_length = get_path_length(segments)
+vector, path_dist, chandu_dist = chandu_len(start, end)
+
+print("Directional Segments:")
+for step in segments:
+    print(f"Move {step[0]} for {step[1]} steps")
+
+print("\nTurning Points:")
+for point in turning_points:
+    print(point)
+
+print("\nTotal Path Length:", total_length)
+print("Chandu Distance:", chandu_dist)
+print("Path Vector:", vector)
+print("Path Distance:", path_dist)
+
+# Plot the path
+plot_path(turning_points)
+```
+
+## Notes
+- **Chandu Distance**: A custom metric combining elements of Manhattan and Euclidean distances, useful for grid-based games.
+- **Path Length**: The total number of steps along the minimal-turn path (may differ from Chandu distance).
+- **Run-Length Encoding**: Efficiently represents straight segments in the path.
 
 ## Algorithm Details
 
@@ -104,6 +184,13 @@ For 2D points `[0,0]` to `[3,4]`:
 # Run tests (if test file exists)
 python test_distance.py
 ```
+
+## Dependencies
+
+- **Core**: No external dependencies (uses Python standard library)
+- **Visualization**: 
+  - `matplotlib>=3.5.0` - For plotting and visualization
+  - `numpy>=1.21.0` - For numerical operations
 
 ## License
 
