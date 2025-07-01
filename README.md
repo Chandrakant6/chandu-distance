@@ -109,7 +109,7 @@ plot_bar([0, 0], [3, 4])
 python plotting.py
 ```
 
-## API Reference
+## API Reference (i havent build an API)
 
 ### `chandu_len(a: list[float], b: list[float]) -> tuple[list[float], list[float], float]`
 Calculate the custom Chandu distance between two points in n-dimensional space.
