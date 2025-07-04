@@ -89,11 +89,30 @@ plot_analysis([0, 0], [3, 4])
 
 ### 3D Visualization
 ```python
-from plotting import plot_3d
+from plotting import plot_path
 
-# Visualize 3D distance field
-plot_3d(center=[0, 0, 0], max_dist=3)
+start = [0, 0, 0]
+end = [1, 2, 3]
+
+# Compute Chandu path data (assuming compute_chandu_path_data and expand_path are available)
+_, _, _, chandu_dist, segments = compute_chandu_path_data(start, end)
+path_points = expand_path(start, segments)
+
+print("Directional Segments:")
+for direction, step in segments:
+    print(f"-> {direction} x {step}")
+
+print("\nTurning Points:")
+for point in path_points:
+    print(point)
+
+print("\nChandu Distance:", chandu_dist)
+
+plot_path(path_points, start, end)  # Plots Chandu, Euclidean (dashed), and Manhattan (dotted) lines
 ```
+
+- The plot will show the Chandu path, a dashed Euclidean line, and a dotted Manhattan line between the start and end points.
+- Output for directional segments now uses ASCII arrows and 'x' (e.g., `-> (1, 1, 1) x 1`).
 
 ### Bar Chart Comparison
 ```python
@@ -109,7 +128,7 @@ plot_bar([0, 0], [3, 4])
 python plotting.py
 ```
 
-## API Reference (i havent build an API)
+## API Reference (no API yet)
 
 ### `chandu_len(a: list[float], b: list[float]) -> tuple[list[float], list[float], float]`
 Calculate the custom Chandu distance between two points in n-dimensional space.
